@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{dialogState.title}}</h2>
+<form [formGroup]="loginForm" (submit)="login()">
+<mat-dialog-content fxLayout="column">
+    <mat-form-field appearance="outline">
+      <mat-label>Email</mat-label>
+      <input formControlName="email" matInput type="text">
+      <mat-error>Enter your email</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Password</mat-label>
+      <input formControlName="password" matInput type="password">
+      <mat-hint>
+        <a style="color:deeppink" href="random.com">Forgot your password?</a>
+      </mat-hint>
+      <mat-error>Enter your password</mat-error>
+    </mat-form-field>
+  
+</mat-dialog-content>
+<div mat-dialog-actions fxLayout="row" fxLayoutAlign="start center">
+  <button *ngIf="dialogState.state === 'login'" mat-stroked-button (click)="signUp()">Sign Up</button>
+  <div fxFlex></div>
+  <button *ngIf="dialogState.state === 'login'" mat-raised-button color="accent" type="submit" [disabled]="loginForm.invalid" (click)="login()">Sign In</button>
+  <button *ngIf="dialogState.state === 'signup'" mat-raised-button color="accent" type="submit" (click)="signup()">Sign Up</button>
+</div>
+</form>
