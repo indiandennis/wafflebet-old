@@ -3,13 +3,13 @@
   <mat-dialog-content fxLayout="column">
     <mat-form-field appearance="outline">
       <mat-label>Email</mat-label>
-      <input formControlName="email" name="email" matInput type="text" >
+      <input formControlName="email" name="email" matInput type="text" [errorStateMatcher]="matcher" >
       <mat-error >{{dialogState.emailError}}</mat-error>
 
     </mat-form-field>
     <mat-form-field appearance="outline">
       <mat-label>Password</mat-label>
-      <input formControlName="password" name="password" matInput type="password">
+      <input formControlName="password" name="password" matInput type="password" [errorStateMatcher]="matcher">
       <mat-hint>
         <a style="color:deeppink" href="random.com">Forgot your password?</a>
       </mat-hint>
