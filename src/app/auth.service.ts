@@ -9,6 +9,8 @@ import { catchError, map, tap } from 'rxjs/operators';
 })
 export class AuthService {
   ret = false;
+  credential: auth.UserCredential;
+
   constructor(public afAuth: AngularFireAuth) {}
 
   logout() {
@@ -16,13 +18,6 @@ export class AuthService {
   }
 
   login(email: string, password: string) {
-    this.afAuth.auth
-      .signInWithEmailAndPassword(email, password)
-      .catch(function(error) {
-        // Handle Errors here.
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode + ': ' + errorMessage);
-      });
+    return from(this.afAuth.auth.signInWithEmailAndPassword(email, password));
   }
 }
