@@ -1,9 +1,11 @@
-<div fxLayout="column" fxLayoutAlign="center center">
-  <mat-card>
+<div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="3em">
+
+  <mat-card *ngIf="">
     <mat-card-title>Dashboard login test</mat-card-title>
     <mat-card-subtitle>This content is only visible to {{user.name}}</mat-card-subtitle>
     <mat-card-content>
       <span>hi {{user.name}}!</span>
     </mat-card-content>
   </mat-card>
+
 </div>

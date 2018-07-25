@@ -1,12 +1,26 @@
 <div class="mat-typography" fxLayout="row" fxLayoutAlign="start center">
-  <mat-toolbar color="primary" class="mat-elevation-z4">
-    <h1 fxFlex>Wafflebet</h1>
-    <div>
-       
-      <button mat-raised-button color="accent" (click)="openLogin()">
-        <!-- <mat-icon>account_circle</mat-icon> -->
-        SIGN IN
+  <mat-toolbar color="primary" class="mat-elevation-z4 app-toolbar">
+    <h1 class="mat-overline" fxFlex>Wafflebet</h1>
+
+    <div *ngIf="user !== undefined">
+      <button mat-raised-button color="accent" *ngIf="!checkLogin()" (click)="openLogin()">
+        <span>SIGN IN</span>
       </button>
+
+      <div>
+        <button mat-icon-button *ngIf="checkLogin()" [matMenuTriggerFor]="userMenu">
+          <mat-icon>account_circle</mat-icon>
+        </button>
+        <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+          <button mat-menu-item (click)="logout()">
+            <mat-icon>exit_to_app</mat-icon>
+            <span>Sign out</span>
+          </button>
+        </mat-menu>
+      </div>
     </div>
+
+
+
   </mat-toolbar>
 </div>

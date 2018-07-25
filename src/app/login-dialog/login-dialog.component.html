@@ -1,27 +1,60 @@
-<h2 mat-dialog-title>{{dialogState.title}}</h2>
-<form [formGroup]="loginForm" (submit)="login()" >
-  <mat-dialog-content fxLayout="column">
-    <mat-form-field appearance="outline">
-      <mat-label>Email</mat-label>
-      <input formControlName="email" name="email" matInput type="text" [errorStateMatcher]="matcher" >
-      <mat-error >{{dialogState.emailError}}</mat-error>
+<div fxLayout="row" [@slideInOut]="dialogState.state" fxLayoutAlign="center center">
+  <div fxLayout="column">
+    <h2 mat-dialog-title>{{dialogState.title}}</h2>
+    <form [formGroup]="loginForm" (submit)="submitHandler()">
+      <div>
+        <mat-dialog-content >
+          <div *ngIf="dialogState.state !== 'endState'" fxLayout="column">
+            <mat-form-field appearance="outline">
+              <mat-label>Email</mat-label>
+              <input formControlName="email" name="email" matInput type="email" [errorStateMatcher]="matcher">
+              <mat-error>{{dialogState.emailError}}</mat-error>
+            </mat-form-field>
 
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-      <mat-label>Password</mat-label>
-      <input formControlName="password" name="password" matInput type="password" [errorStateMatcher]="matcher">
-      <mat-hint>
-        <a style="color:deeppink" href="random.com">Forgot your password?</a>
-      </mat-hint>
-      <mat-error>{{dialogState.passwordError}}</mat-error>
-    </mat-form-field>
+            <mat-form-field appearance="outline" *ngIf="dialogState.state !== 'forgotPass'">
+              <mat-label>Password</mat-label>
+              <input formControlName="password" name="password" matInput type="password" [errorStateMatcher]="matcher">
+              <mat-hint>
+                <a class="clickable-link" *ngIf="dialogState.state === 'login'" (click)="switchToForgotPass()" style="color:#ff4081">Forgot your password?</a>
+              </mat-hint>
+              <mat-error>{{dialogState.passwordError}}</mat-error>
+            </mat-form-field>
+          </div>
+          <p class="mat-body-1" style="max-width: 204px" *ngIf="dialogState.state === 'endState'">{{dialogState.endStateMessage}}</p>
+        </mat-dialog-content>
+        <!-- <mat-checkbox formControlName="rememberCred" class="mat-body-1">Remember me</mat-checkbox> -->
+      </div>
 
-  </mat-dialog-content>
-  <div mat-dialog-actions fxLayout="row" fxLayoutAlign="start center">
-    <button *ngIf="dialogState.state === 'login'" mat-stroked-button (click)="signUp()">Sign Up</button>
-    <div fxFlex></div>
-    <button *ngIf="dialogState.state === 'login'" mat-raised-button color="accent" type="submit" [disabled]="loginForm.invalid"
-      (click)="login()">Sign In</button>
-    <button *ngIf="dialogState.state === 'signup'" mat-raised-button color="accent" type="submit" (click)="signup()">Sign Up</button>
+      <div mat-dialog-actions fxLayout="row" fxLayoutAlign="start center">
+
+        <div>
+          <button *ngIf="dialogState.state === 'login'" type="button" mat-stroked-button (click)="switchToSignUp()">
+            <span>Sign Up</span>
+          </button>
+          <button *ngIf="dialogState.state !== 'login'" type="button" mat-stroked-button (click)="switchToLogin()">
+            <span>Sign In</span>
+          </button>
+        </div>
+        <div fxFlex></div>
+        <div>
+          <button *ngIf="dialogState.state === 'login'" mat-raised-button color="accent" type="submit" [disabled]="loginForm.invalid"
+            (click)="login()">
+            <span>Sign In</span>
+          </button>
+          <button *ngIf="dialogState.state === 'signUp'" mat-raised-button color="accent" type="submit" [disabled]="loginForm.invalid"
+            (click)="signUp()">
+            <span>Sign Up</span>
+          </button>
+          <button *ngIf="dialogState.state === 'forgotPass'" mat-raised-button color="accent" type="submit" [disabled]="loginForm.controls.email.invalid"
+            (click)="forgotPass()">
+            <span>Reset</span>
+          </button>
+          <button *ngIf="dialogState.state === 'endState'" mat-raised-button color="accent" type="submit" (click)="dialogRef.close()">
+            <span>Close</span>
+          </button>
+        </div>
+
+      </div>
+    </form>
   </div>
-</form>
+</div>

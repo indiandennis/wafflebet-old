@@ -7,3 +7,11 @@ body {
   height: 100%;
   margin: 0;
 }
+
+.login-dialog-container .mat-dialog-container {
+  overflow: hidden;
+}
+
+.clickable-link {
+  cursor: pointer;
+}
